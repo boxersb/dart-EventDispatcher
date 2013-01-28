@@ -1,0 +1,6 @@
+name: EventDispatcher
+description: EventDispatcher for dart
+version: 0.0.1
+dependencies:
+    browser: any
+  
