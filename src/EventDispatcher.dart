@@ -4,12 +4,14 @@ typedef void Handler(CustomEvent e);
 
 class CustomEvent {
   String _eventType = "none";
-  Map _event = {};
+  Map _detail = {};
 
   String get type => _eventType;
   set type(String _type) => _eventType = _type;
+  
+  Map get detail => _detail;
 
-  CustomEvent(this._eventType, [this._event]);
+  CustomEvent(this._eventType, [this._detail]);
 
   void setProperty(String propertyName, propertyValue) {
     _event[propertyName] = propertyValue;
@@ -23,7 +25,7 @@ class EventListenerHash {
 
   void add(String type, Handler hnd) {
     List listeners = getListenersByType(type);
-
+    
     listeners.add(hnd);
   }
 
@@ -34,6 +36,9 @@ class EventListenerHash {
       List listeners = getListenersByType(type);
       int idx = listeners.indexOf(hnd);
 
+      print(type);
+      print(idx);
+      print(listeners.length);
       if(idx > -1){
         listeners.removeAt(idx);
       }
@@ -43,7 +48,9 @@ class EventListenerHash {
   }
 
   bool hasType(String type) {
-    return (_hash[type] != null && _hash is List && _hash.length > 0);
+    List hashOfType = _hash[type];
+    
+    return (hashOfType != null && hashOfType is List && hashOfType.length > 0);
   }
 
   List getListenersByType(String type) {
@@ -55,14 +62,32 @@ class EventListenerHash {
   }
 }
 
+class EventListener {
+  String type;
+  Handler handler;
+  
+  EventListener(this.type, this.handler);
+}
+
 class EventDispatcher {
   EventListenerHash _hash = new EventListenerHash();
+  
+  void operator +(EventListener listener) {
+    return attach(listener.type, listener.handler);
+  }
+  
+  void operator -(EventListener listener) {
+    return detach(listener.type, listener.handler);
+  }
   
   void attach(type, [Handler hnd]) {
     if(?hnd){
       type = type as String;
-      _hash.add(type, hnd);
-    }else{
+      _hash.add(type, hnd);        
+    } else if(type is EventListener) {
+      EventListener listener = type as EventListener;
+      _hash.add(listener.type, listener.handler);
+    } else {
       Map <String, Handler>listenerList = type as Map;
       
       listenerList.forEach( (String key, Handler hnd) => attach(key, hnd) );
@@ -73,26 +98,28 @@ class EventDispatcher {
     if(?hnd){
       type = type as String;
       _hash.remove(type, hnd);
-    }else if(type is String){
+    } else if(type is EventListener) {
+      EventListener listener = type as EventListener;
+      _hash.remove(listener.type, listener.handler);
+    } else if(type is String) {
       _hash.remove(type);
-    }else if(type is Map){
+    } else if(type is Map) {
       Map <String, Handler>listenerList = type as Map;
       
       listenerList.forEach( (String key, Handler hnd) => detach(key, hnd) );
     }
   }
   
-  bool dispatch(CustomEvent e) {
-    String type = e.type;
-
-    if(!_hash.hasType(type)) return false;
+  void dispatch(e, [Map detail]) {
+    CustomEvent event = (e is CustomEvent) ? e as CustomEvent : new CustomEvent(e as String, detail);
+ 
+    String type = event.type;
+    if(!_hash.hasType(type)) return;
     
     List listeners = _hash.getListenersByType(type);
     
     listeners.forEach((Handler f) {
-      f(e);
+      f(event);
     });
-    
-    return true;
   }
 }

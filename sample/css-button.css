@@ -2,7 +2,14 @@
  * CSS3 Button from 'BINARY MOON'
  *   http://www.binarymoon.co.uk/demo/css3-button/
  */
-a.css-button {
+div.wrap { width:700px;margin:0 auto;text-align:center; }
+ul, li { list-style:none;margin:0;padding:0 }
+ul.item-list { width:625px;margin:0 auto; }
+ul.item-list:after {content: ".";display:block;font-size:0;height:0px;line-height:0;clear:both;visibility:hidden;}
+ul.item-list li { float:left;margin:10px }
+ul.item-list li span.item { display:block;height:230px; }
+ul.item-list li span.price { display:block;height:20px;text-align:center }
+ul.item-list li a {
 	font-size:20px;
 	color:#000;
 	text-decoration:none;
@@ -23,33 +30,12 @@ a.css-button {
 	background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFFFF), to(#EEE));
 	background:-moz-linear-gradient(0% 90% 90deg, #EEE, #FFF);
 
-	-webkit-transition: all .4s ease-in-out;
+/*	-webkit-transition: all .4s ease-in-out;
 	-moz-transition: all .4s ease-in-out;
 	-o-transition: all .4s ease-in-out;
-	transition: all .4s ease-in-out;
+	transition: all .4s ease-in-out;*/
 }
-a.css-button:hover {
-	color:#fff;
-	border-color:#3278BE;
-
-	background:#4195DD;
-	background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#4195DD), to(#003C82));
-	background:-moz-linear-gradient(0% 90% 90deg, #003C82, #4195DD);
-}
-a.css-button:active {
-	background:#4195DD;
-	background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#003C82), to(#4195DD));
-	background:-moz-linear-gradient(0% 90% 90deg, #4195DD, #003C82);
-}
-
-a.css-button.notransitions {
-	-webkit-transition: none;
-	-moz-transition: none;
-	-o-transition: none;
-	transition: none;
-}
-
-a.buy {
+ul.item-list li a.buy {
 	color:#fff;
 	border:1px solid #000;
 
@@ -57,3 +43,18 @@ a.buy {
 	background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#000), to(#777));
 	background:-moz-linear-gradient(0% 90% 90deg, #777, #000);
 }
+ul.item-list li a:hover {
+	color:#fff;
+	border-color:#3278BE;
+
+	background:#4195DD;
+	background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#4195DD), to(#003C82));
+	background:-moz-linear-gradient(0% 90% 90deg, #003C82, #4195DD);
+}
+ul.item-list li a:active {
+	background:#4195DD;
+	background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#003C82), to(#4195DD));
+	background:-moz-linear-gradient(0% 90% 90deg, #4195DD, #003C82);
+}
+
+div.inventory { clear:both;text-align:right; }

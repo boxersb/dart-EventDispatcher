@@ -3,12 +3,24 @@
   <head>
     <meta charset="utf-8">
     <title>EventDispatcher sample</title>
-    <link rel="stylesheet" media="screen" href="css-button.css" /?
+    <link rel="stylesheet" media="screen" href="css-button.css" />
   </head>
   <body>
 	
-	<a href="http://www.binarymoon.co.uk/" class="css-button buy">Buy</a>
-	<a href="http://www.binarymoon.co.uk/" class="css-button">Sell</a>
+  <div class="wrap">
+  	<h1>Vending Machine with EventDispatcher</h1>
+    
+    <ul class="item-list"></ul>
+
+    <div class="inventory">
+      <span class="balance">Balance : $<em>10000</em></span>
+    </div>
+    <a href="#" class="stop">Stop</a>
+    <div class="console">
+    </div>
+</div>
+
+  
 
 
     <script type="application/dart" src="sample.dart"></script>
